@@ -1,73 +1,134 @@
-# React + TypeScript + Vite
+# 🏠 HOA Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A responsive Homeowner Association (HOA) portal built with **React and TypeScript** that allows homeowners to view balances, select payment plans, and make HOA payments.
 
-Currently, two official plugins are available:
+This project is designed as a **production-style MVP**, using a mock backend with clean separation of concerns and future scalability in mind.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## ✨ Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Simulated user authentication
+- HOA payments with:
+  - Monthly plan
+  - Quarterly plan
+  - Yearly plan
+- Dashboard displaying:
+  - Current balance
+  - Selected payment plan
+  - Payment history
+- Persisted state using a mock backend
+- Protection against duplicate payments
+- Loading and success feedback during payment actions
+- Responsive UI for desktop and mobile
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🧠 Design Philosophy
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+This project was built following real-world engineering principles:
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Clear business rules over clever logic
+- Immutable state updates
+- Strong type safety with TypeScript
+- Clean separation between UI and data logic
+- MVP-first approach with documented future enhancements
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Complex billing-cycle enforcement (e.g., restricting payments to one per period) is intentionally deferred to a later phase to keep the MVP clean and understandable.
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+## 🛠️ Tech Stack
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- **Frontend:** React, TypeScript
+- **State Management:** React Hooks
+- **Styling:** CSS
+- **Backend:** Mock JSON-based service
+- **Build Tool:** Vite
+- **Deployment:** Vercel
+
+---
+
+## 📁 Project Structure
+
+src/
+├── components/
+│ ├── Dashboard.tsx # User dashboard UI
+│ └── Login.tsx # Login screen
+├── services/
+│ └── api.ts # Mock backend logic
+├── types/
+│ └── index.ts # Shared TypeScript types
+├── App.tsx # App state & business logic
+└── main.tsx # Application entry point
+
+### Structure Rationale
+
+- UI components are separated from business logic
+- Backend logic is abstracted behind a service layer
+- Shared types are centralized
+- Mock backend can be replaced with a real API easily
+
+---
+
+## 💳 Payment Logic
+
+- HOA fees are defined as:
+  - Monthly: $100
+  - Quarterly: $300
+  - Yearly: $1200
+- Changing a payment plan:
+  - Applies only to future payments
+  - Resets the current balance
+- Duplicate payment submissions are prevented via UI state
+- Billing cycle enforcement is planned for a future iteration
+
+---
+
+## 🚀 Getting Started
+
+### Clone the repository
+
+```bash
+git clone https://github.com/<your-username>/hoa-portal.git
+cd hoa-portal
+
+npm install
+
+## Run Locally
+
+npm run dev
+
+### The app will be available at:
+
+http://localhost:5173
+
+## Production Build
+
+http://localhost:5173
+
+## Deployment
+
+The application is deployed using Vercel, enabling:
+
+- The application is deployed using Vercel, enabling:
+- Zero-configuration setup
+- Global CDN distribution
+
+## Future Enhancement
+
+- Billing cycle enforcement (monthly / quarterly / yearly)
+- Proration when changing plans mid-cycle
+- Proration when changing plans mid-cycle
+- Real authentication and backend API
+- Payment gateway integration (e.g., Stripe)
+
+## Collaboration Notes
+
+This project follows patterns used in professional teams:
+
+- MVP-focused delivery
+- Explicit trade-offs documented
+- Clean and maintainable architecture
+
 ```
