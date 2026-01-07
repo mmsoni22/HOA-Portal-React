@@ -6,9 +6,15 @@
       "email": "john@example.com",
       "password": "password123",
       "address": "123 Main St",
-      "paymentPlan": "quarterly",
+      "paymentPlan": "monthly",
       "balance": 0,
       "payments": [
+        {
+          "id": 1767752551814,
+          "amount": 100,
+          "date": "2026-01-07",
+          "plan": "monthly"
+        },
         {
           "id": 1767740365791,
           "amount": 300,

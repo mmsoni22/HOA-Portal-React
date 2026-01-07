@@ -3,6 +3,7 @@ import { fetchUsers, updateUser } from "./services/api";
 import type { User } from "./types/User";
 import type { Payment, PaymentPlan } from "./types/Payment";
 import Dashboard from "./components/Dashboard";
+import "./styles/login.css";
 
 function App() {
   const [users, setUsers] = useState<User[]>([]);
@@ -113,41 +114,65 @@ function App() {
     <>
       <div
         className="container"
-        style={{
-          background: "#afb443ff",
-          color: "white",
-          fontWeight: "bold",
-          fontSize: "2rem",
-        }}
+        style={{ color: "white", fontSize: "2rem", fontWeight: "bold" }}
       >
         HOA Portal
       </div>
-
       {!currentUser ? (
-        <div className="container">
-          <h2>Login</h2>
+        <div className="login-container">
+          <div className="login-card">
+            <div className="login-header">
+              <div className="logo-icon">⚡</div>
+              <h2>Sign In</h2>
+              <p>Access your account</p>
+            </div>
 
-          {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
 
-          <div>
-            <input
-              type="email"
-              placeholder="Email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <form
+              className="login-form"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleLogin();
+              }}
+            >
+              <div className="form-group">
+                <div className="input-wrapper">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
+                  <label>Email</label>
+                  <span className="input-line"></span>
+                </div>
+              </div>
+
+              <div className="form-group">
+                <div className="input-wrapper password-wrapper">
+                  <input
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
+                  <label>Password</label>
+                  <span className="input-line"></span>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="login-btn btn"
+                onClick={handleLogin}
+              >
+                <span className="btn-text">Sign In</span>
+                <span className="btn-loader"></span>
+                <span className="btn-glow"></span>
+              </button>
+            </form>
           </div>
-
-          <div>
-            <input
-              type="password"
-              value={password}
-              placeholder="Enter your password"
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
-
-          <button onClick={handleLogin}>Login</button>
         </div>
       ) : (
         <Dashboard
