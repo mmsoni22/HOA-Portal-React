@@ -1,5 +1,6 @@
 import type { User } from "../types/User";
 import "../styles/cards.css";
+import { getNextPaymentDate, canMakePayment } from "../types/Payment";
 
 interface DashboardProps {
   user: User;
@@ -18,6 +19,9 @@ function Dashboard({
   isPaying,
   successMessage,
 }: DashboardProps) {
+  const nextPaymentDate = getNextPaymentDate(user.payments, user.paymentPlan);
+  const canPay =
+    nextPaymentDate === null ? true : canMakePayment(nextPaymentDate);
   return (
     <div className="container">
       <div className="card">
@@ -39,9 +43,15 @@ function Dashboard({
           </select>
         </label>
 
-        <button onClick={onMakePayment} disabled={isPaying}>
+        <button onClick={onMakePayment} disabled={isPaying || !canPay}>
           {isPaying ? "Processing..." : "Make Payment"}
         </button>
+
+        {!canPay && (
+          <p style={{ color: "gray", marginTop: "8px" }}>
+            NextPayment available on <strong>{nextPaymentDate}</strong>
+          </p>
+        )}
 
         {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
       </div>
